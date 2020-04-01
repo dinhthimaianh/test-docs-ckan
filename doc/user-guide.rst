@@ -1,122 +1,55 @@
 ==========
-User guide
+Hướng dẫn người sử dụng
 ==========
 
-This user guide covers using CKAN's web interface to organize, publish and find
-data. CKAN also has a powerful API (machine interface), which makes it easy to
-develop extensions and links with other information systems. The API is
-documented in :doc:`/api/index`.
+Hướng dẫn sử dụng này bao gồm sử dụng giao diện web, để tổ chức, xuất bản
+và tìm dữ liệu.
 
-Some web UI features relating to site administration are available only to
-users with sysadmin status, and are documented in :doc:`sysadmin-guide`.
-
--------------
-What is CKAN?
--------------
-
-CKAN is a tool for making open data websites. (Think of a content management
-system like WordPress - but for data, instead of pages and blog posts.) It
-helps you manage and publish collections of data. It is used by national and
-local governments, research institutions, and other organizations who collect a
-lot of data.
-
-Once your data is published, users can use its faceted search features to
-browse and find the data they need, and preview it using maps, graphs and
-tables - whether they are developers, journalists, researchers, NGOs, citizens,
-or even your own staff.
-
-Datasets and resources
-======================
-
-For CKAN purposes, data is published in units called "datasets". A dataset is a
-parcel of data - for example, it could be the crime statistics for a region,
-the spending figures for a government department, or temperature readings from
-various weather stations. When users search for data, the search results they
-see will be individual datasets.
-
-A dataset contains two things:
-
-* Information or "metadata" about the data. For example, the title and
-  publisher, date, what formats it is available in, what license it is released
-  under, etc.
-
-* A number of "resources", which hold the data itself. CKAN does not mind what
-  format the data is in. A resource can be a CSV or Excel spreadsheet, XML file,
-  PDF document, image file, linked data in RDF format, etc. CKAN can store the
-  resource internally, or store it simply as a link, the resource itself being
-  elsewhere on the web. A dataset can contain any number of resources. For
-  example, different resources might contain the data for different years, or
-  they might contain the same data in different formats.
+Một số tính năng UI web liên quan đến quản trị trang web chỉ khả dụng cho 
+người dùng có phân quyền là sysadmin và đây là tài liệu trong :doc:`sysadmin-guide`.
 
 
-.. note:: On early CKAN versions, datasets were called "packages" and this name
-    has stuck in some places, specially internally and on API calls. Package has
-    exactly the same meaning as "dataset".
-
-
-Users, organizations and authorization
+Người dùng, tổ chức và ủy quyền
 ======================================
 
-CKAN users can register user accounts and log in. Normally (depending on the
-site setup), login is not needed to search for and find data, but is needed for
-all publishing functions: datasets can be created, edited, etc by users with
-the appropriate permissions.
+Bạn có thể tìm kiếm dữ liệu mà không cần đăng nhập. Bạn có thể đăng ký tài khoản 
+thành viên và đăng nhập.
 
-Normally, each dataset is owned by an "organization". A CKAN instance can have
-any number of organizations. For example, if CKAN is being used as a data
-portal by a national government, the organizations might be different
-government departments, each of which publishes data. Each organization can
-have its own workflow and authorizations, allowing it to manage its own
-publishing process.
+Mỗi tập dữ liệu được sở hữu bởi một hoặc nhiều tổ chức. Ví dụ: Website được chính 
+phủ sử dụng làm cổng thông tin dữ liệu, thì các tổ chức có thể là các cơ quan chính 
+chủ khác nhau, mỗi cơ quan công bố dữ liệu. Mỗi tổ chức có thể có quy trình làm việc 
+và ủy quyền riêng, cho phép tổ chức quản lý quy trình xuất bản của riêng mình.
 
-An organization's administrators can add individual users to it, with
-different roles depending on the level of authorization needed. A user in an
-organization can create a dataset owned by that organization. In the default
-setup, this dataset is initially private, and visible only to other users in
-the same organization. When it is ready for publication, it can be published at
-the press of a button. This may require a higher authorization level within the
-organization.
+Một quản trị viên của tổ chức có thể thêm người dùng vào tổ chức, với các vai trò khác 
+nhau tùy thuộc vào mức độ ủy quyền cần thiết. Là thành viên trong một tổ chức có thể 
+tạo một bộ dữ liệu thuộc sở hữu của tổ chức đó. Trong thiết lập mặc định, bộ dữ liệu 
+này ban đầu là chế độ riêng tư và chỉ hiện thị cho thành viên khác trong cùng một tổ chức. 
+Khi muốn công khai bộ dữ liệu thì yêu cầu một mức ủy quyền cao hơn trong tổ chức để thay đổi chế độ.
 
-Datasets cannot normally be created except within organizations. It is
-possible, however, to set up CKAN to allow datasets not owned by any
-organization. Such datasets can be edited by any logged-in user, creating the
-possibility of a wiki-like datahub.
-
-.. note::
-
-    The user guide covers all the main features of the web user interface (UI).
-    In practice, depending on how the site is configured, some of these functions
-    may be slightly different or unavailable. For example, in an official CKAN
-    instance in a production setting, the site administrator will probably have
-    made it impossible for users to create new organizations via the UI. You can
-    try out all the features described at http://demo.ckan.org.
+Nếu bộ dữ liệu không thuộc sở hữu của bất kỳ tổ chức nào, các bộ dữ liệu như vậy có thể được chỉnh 
+sửa bởi bất kỳ người dùng đã đăng nhập vào.
 
 ----------
-Using CKAN
+Cách sử dụng
 ----------
 
-Registering and logging in
+Đăng ký và đăng nhập
 ==========================
 
-.. note::
-
-    Registration is needed for most publishing features and for personalization
-    features, such as "following" datasets. It is not needed to search for and
-    download data.
+Để tạo ID người dùng, sử dụng link "Đăng ký". Web sẽ yêu cầu như sau:
 
 To create a user ID, use the "Register" link at the top of any page. CKAN will
 ask for the following:
 
-* *Username* -- choose a username using only letters, numbers, - and _ characters.
-  For example, "jbloggs" or "joe_bloggs93".
+* *Tên tài khoản* -- Các ký tự được sử dụng là chữ cái, số, và ký tự _ .
 
-* *Full name* -- to be displayed on your user profile
+* *Họ và tên* -- Sẽ được hiện thị trên hồ sơ của bạn.
 
-* *E-mail address* -- this will not be visible to other users
+* *Thư điện tử* -- Sẽ không hiện thị cho người dùng khác.
 
-* *Password* -- enter the same password in both boxes
+* *Mật khẩu* -- Nhập cùng một mật khẩu. Mật khẩu ít nhất có 8 ký tự.
 
-.. image:: /images/register_account.jpg
+.. image:: /images/dang-ky.PNG
 
 If there are problems with any of the fields, CKAN will tell you the problem
 and enable you to correct it. When the fields are filled in correctly, CKAN

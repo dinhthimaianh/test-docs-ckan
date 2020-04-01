@@ -1,8 +1,0 @@
-[main]
-host = https://www.transifex.com
-
-[sixodp.ckanext-rating]
-file_filter = ckanext/rating/i18n/<lang>/LC_MESSAGES/ckanext-rating.po
-source_file = ckanext/rating/i18n/ckanext-rating.pot
-source_lang = en
-type = PO

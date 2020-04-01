@@ -19,7 +19,6 @@ import os
 import subprocess
 
 
-import ckan
 
 # If your extensions (or modules documented by autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -79,7 +78,7 @@ rst_epilog = '''
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo',
-    'sphinx.ext.autosummary', 'ckan.plugins.toolkit_sphinx_extension']
+    'sphinx.ext.autosummary', ]
 autodoc_member_order = 'bysource'
 todo_include_todos = True
 
@@ -96,8 +95,8 @@ source_suffix = '.rst'
 master_doc = 'contents'
 
 # General information about the project.
-project = u'CKAN'
-project_short_name = u'CKAN'
+project = u'Open Data documentation'
+project_short_name = u'opendata'
 copyright = u'''&copy; 2009-2018 <a href="https://okfn.org/">Open Knowledge International</a> and <a href="https://github.com/ckan/ckan/graphs/contributors">contributors</a>.
     Licensed under <a
     href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons
@@ -113,138 +112,27 @@ html_show_sphinx = False
 # built documents.
 #
 # The short X.Y version.
-version = ckan.__version__.rstrip('abcdefgh')
+version = u''
 # The full version, including alpha/beta/rc tags.
-release = ckan.__version__
+release =  u'1.0'
 version_re = None
 point_releases_ = None
 
 SUPPORTED_CKAN_VERSIONS = 3
 
 
-def get_release_tags():
-    git_tags = subprocess.check_output(
-        ['git', 'tag', '-l'], stderr=subprocess.STDOUT).split()
-
-    release_tags_ = [tag for tag in git_tags if tag.startswith('ckan-')]
-
-    # git tag -l prints out the tags in the right order anyway, but don't rely
-    # on that, sort them again here for good measure.
-    release_tags_.sort()
-
-    return release_tags_
 
 
-def parse_version(version_):
-    '''Parses version string
-        ckan-2.1.3 -> ('2', '1', '3')
-        ckan-2.1   -> ('2', '1', None)  (the occasion when we didn't do semver)
-    '''
-    global version_re
-    if version_re is None:
-        version_re = re.compile('(?:ckan-)?(\d+)\.(\d+)(?:\.(\d+))?[a-z]?')
-    return version_re.match(version_).groups()
 
 
-def get_equivalent_point_release(version_):
-    '''Returns the equivalent point release of any given version.
-
-    e.g.
-        ckan-2.1.3 -> ckan-2.1
-        ckan-2.1   -> ckan-2.1  (the occasion when we didn't do semver)
-    '''
-    return 'ckan-%s.%s' % parse_version(version_)[:2]
 
 
-def get_point_releases():
-    '''
-    returns ['ckan-1.3', 'ckan-1.4', ... 'ckan-2.0', 'ckan-2.1', ...]
-    '''
-    global point_releases_
-    if point_releases_ is None:
-        releases = get_release_tags()
-        point_releases_ = []
-        for release in releases:
-            point_release = get_equivalent_point_release(release)
-            if point_release not in point_releases_:
-                point_releases_.append(point_release)
-    return point_releases_
 
 
-def get_status_of_this_version():
-    '''Returns whether this release is supported or another category.
-    '''
-    equiv_point_release = get_equivalent_point_release(version)
-    point_releases_ = get_point_releases()
-    supported_point_releases = point_releases_[-int(SUPPORTED_CKAN_VERSIONS):]
-    if equiv_point_release in supported_point_releases:
-        return 'supported'
-    else:
-        return 'unsupported'
 
 
-def get_latest_release_tag():
-    '''Return the name of the git tag for the latest stable release.
 
-    e.g.: "ckan-2.1.1"
-
-    This requires git to be installed.
-
-    '''
-    release_tags_ = get_release_tags()
-
-    if release_tags_:
-        return release_tags_[-1]
-    else:
-        return 'COULD_NOT_DETECT_VERSION_NUMBER'
-
-
-def get_latest_release_version():
-    '''Return the version number of the latest stable release.
-
-    e.g. "2.1.1"
-
-    '''
-    version = get_latest_release_tag()[len('ckan-'):]
-
-    # TODO: We could assert here that latest_version matches X.Y.Z.
-
-    return version
-
-
-def get_latest_package_name(distro='trusty'):
-    '''Return the filename of the Ubuntu package for the latest stable release.
-
-    e.g. "python-ckan_2.1-trusty_amd64.deb"
-
-    '''
-    # We don't create a new package file name for a patch release like 2.1.1,
-    # instead we just update the existing 2.1 package. So package names only
-    # have the X.Y part of the version number in them, not X.Y.Z.
-    latest_minor_version = get_latest_release_version()[:3]
-
-    return 'python-ckan_{version}-{distro}_amd64.deb'.format(
-        version=latest_minor_version, distro=distro)
-
-
-def get_min_setuptools_version():
-    '''
-    Get the minimum setuptools version as defined in requirement-setuptools.txt
-    '''
-    filename = os.path.join(os.path.dirname(__file__), '..',
-                            'requirement-setuptools.txt')
-    with open(filename) as f:
-        return f.read().split('==')[1].strip()
-
-
-def write_substitutions_file(**kwargs):
-    '''
-    Write a file in the doc/ dir containing reStructuredText substitutions.
-
-    Any keyword argument is stored as a substitution.
-    '''
-    filename = '_substitutions.rst'
-    header = ''':orphan:
+'''
 
 .. Some common reStructuredText substitutions.
 
@@ -260,28 +148,7 @@ def write_substitutions_file(**kwargs):
      |latest_release_version|
 
 '''
-    with open(filename, 'w') as f:
-        f.write(header.format(filename=filename))
-        for name, substitution in kwargs.items():
-            f.write('.. |{name}| replace:: {substitution}\n'.format(
-                    name=name, substitution=substitution))
 
-
-latest_release_tag_value = get_latest_release_tag()
-latest_release_version = get_latest_release_version()
-latest_minor_version = latest_release_version[:3]
-is_master = release.endswith('a')
-is_supported = get_status_of_this_version() == 'supported'
-is_latest_version = version == latest_release_version
-
-write_substitutions_file(
-    latest_release_tag=latest_release_tag_value,
-    latest_release_version=get_latest_release_version(),
-    latest_package_name_precise=get_latest_package_name('precise'),
-    latest_package_name_trusty=get_latest_package_name('trusty'),
-    latest_package_name_xenial=get_latest_package_name('xenial'),
-    min_setuptools_version=get_min_setuptools_version(),
-)
 
 
 # The language for content autogenerated by Sphinx. Refer to documentation
@@ -332,15 +199,6 @@ if not on_rtd:
 
 html_sidebars = {
     '**':  ['globaltoc.html'],
-}
-
-html_context = {
-    'latest_release_tag_value': latest_release_tag_value,
-    'is_master': is_master,
-    'is_supported': is_supported,
-    'is_latest_version': is_latest_version,
-    'extra_css_files': extra_css_files,
-    'latest_minor_version': latest_minor_version,
 }
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
@@ -402,7 +260,7 @@ html_static_path = ['_static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'CKANdoc'
+htmlhelp_basename = 'OpenDatadoc'
 
 
 # Options for LaTeX output
@@ -417,8 +275,8 @@ htmlhelp_basename = 'CKANdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('contents', 'CKAN.tex', u'CKAN documentation',
-   u'CKAN contributors', 'manual'),
+  ('contents', 'Opendata.tex', u'Open Data documentation',
+   u'Opendata contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

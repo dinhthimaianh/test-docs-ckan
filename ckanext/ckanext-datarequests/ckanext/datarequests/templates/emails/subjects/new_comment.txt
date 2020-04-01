@@ -1,1 +1,0 @@
-[{{ site_title }}] Yêu cầu dữ liệu {{ datarequest['title'] }} có một bình luận mới!

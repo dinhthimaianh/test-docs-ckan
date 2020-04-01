@@ -1,5 +1,5 @@
 ==============
-Sysadmin guide
+Hướng dẫn sysadmin
 ==============
 
 This guide covers the administration features of CKAN 2.0, such as managing

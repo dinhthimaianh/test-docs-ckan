@@ -1,1 +1,0 @@
-[{{ site_title }}] Yêu cầu dữ liệu {{ datarequest['title'] }} được tạo trong tổ chức {{ datarequest['organization']['title'] }}!

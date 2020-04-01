@@ -1,13 +1,13 @@
 :orphan: true
 
 ========
-Overview
+Giới thiệu
 ========
 
 
 
-Welcome to CKAN's documentation! These docs are organized into several guides,
-each guide serves a different audience of CKAN users or contributors.
+Chào mừng bạn đến với tài liệu hướng dẫn sử dụng Dữ liệu mở. Tài liệu này viết nhằm hướng dẫn phục vụ một 
+đối tượng người dùng hoặc người quản trị viên.
 
 .. toctree::
   :maxdepth: 2
