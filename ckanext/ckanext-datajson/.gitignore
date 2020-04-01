@@ -1,0 +1,6 @@
+**.pyc
+build
+ckanext_datajson.egg-info
+.DS_Store
+ckanext/datajson/export_map/*.map.json
+.idea

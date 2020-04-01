@@ -1,0 +1,9 @@
+{% ckan_extends %} {% block confirm_upload_to_cloud %}
+<div id="confirm_upload_to_cloud" style="border: solid 1px; padding: 20px; background: #ddd; display: none;">
+    <p style="font-weight: bold;">{{ _('Do you want to POST data to cloud?') }}</p>
+    <button class="btn btn-primary" id="yes">{{_('YES')}}</button>
+    <button class="btn btn-primary" id="no">{{_('NO')}}</button>
+</div>
+
+
+{% endblock %}

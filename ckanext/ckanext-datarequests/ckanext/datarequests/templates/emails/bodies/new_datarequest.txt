@@ -1,0 +1,12 @@
+Xin chào {{ user.fullname }},
+
+"{{ datarequest['title'] }}" Yêu cầu dữ liệu đã được tạo cho tổ chức "{{ datarequest['organization']['title'] }}".
+
+Kiểm tra bằng cách truy cập tab Yêu cầu dữ liệu trên Cổng dữ liệu mở .
+
+Bạn nhận được thông tin này vì bạn là thành viên của tổ chức được đề cập
+--
+
+Thân mến,
+{{ site_title }} Team -- {{ site_url }}
+

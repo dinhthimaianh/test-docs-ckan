@@ -1,0 +1,6 @@
+{% ckan_extends %}
+ {% block description %}
+    {% if organization.description %}
+      <p>{{ h.markdown_extract(organization.description, extract_length=35) }}</p>
+    {% endif %}
+  {% endblock %}

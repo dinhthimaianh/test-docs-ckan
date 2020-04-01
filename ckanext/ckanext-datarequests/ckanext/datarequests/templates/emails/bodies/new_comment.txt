@@ -1,0 +1,15 @@
+Xin chào {{ user.fullname }},
+
+Một người dùng đã bình luận trong "{{ datarequest['title'] }}" Yêu cầu dữ liệu. Kiểm tra nhận xét mới này  trong trường hợp bạn muốn trả lời.
+
+Bạn nhận được thông báo này tại vì:
+
+* Bạn là chủ sở hữu của Yêu cầu dữ liệu
+* Bạn là thành viên của tổ chức mà được Yêu cầu dữ liệu 
+* Bạn đang theo Yêu cầu dữ liệu
+* Bạn đã đăng một bình luận trong yêu cầu dữ liệu
+
+--
+
+Thân mến,
+{{ site_title }} Team -- {{ site_url }}
